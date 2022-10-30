@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
 
-const { Sequelize } = require('sequelize');
+const Sequelize = require('sequelize-cockroachdb');
 
 const basename = path.basename(__filename);
 const db = {};
