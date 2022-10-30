@@ -10,7 +10,8 @@ const db = {};
 
 const sequelize = new Sequelize(process.env.DATABASE_URL);
 
-sequelize.sync();
+// this code isn't necessary after the first run
+// sequelize.sync();
 
 fs.readdirSync(__dirname)
   .filter((file) => {

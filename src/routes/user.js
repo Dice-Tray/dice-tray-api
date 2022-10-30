@@ -1,6 +1,4 @@
-// Node modules.
 const express = require('express');
-// Relative modules.
 const UserController = require('../controllers/UserController');
 
 // Create the router.
@@ -15,4 +13,4 @@ router.delete('/users/:userID', UserController.deleteUserByID);
 //create the batch route
 router.get('/users', UserController.getAll);
 
-export default router;
+module.exports = router;
