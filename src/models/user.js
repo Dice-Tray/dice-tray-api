@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       firstName: DataTypes.STRING,
       lastName: DataTypes.STRING,
+      displayName: DataTypes.STRING,
       email: {
         type: DataTypes.STRING,
         allowNull: {
@@ -30,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       password: DataTypes.STRING,
       status: DataTypes.STRING,
+      role: DataTypes.STRING,
     },
     {
       sequelize,

@@ -7,13 +7,14 @@ const { User } = model;
 module.exports = {
   async create(newUserData) {
     // sanitize inputs and ensure all are present
-    const { email, password, firstName, lastName } = pick(newUserData, [
+    const { email, password, firstName, lastName, displayName } = pick(newUserData, [
       'email',
       'password',
       'firstName',
       'lastName',
+      'displayName',
     ]);
-    if (!email || !password || !firstName || !lastName) {
+    if (!email || !password || !firstName || !lastName || !displayName) {
       throw { status: 400, message: 'Error: Missing parameter' };
     }
 
@@ -29,7 +30,9 @@ module.exports = {
       lastName,
       email,
       password,
+      displayName,
       status: 'ACTIVE',
+      role: 'USER',
     });
 
     return newUser;
@@ -62,6 +65,7 @@ module.exports = {
       password: userData?.password,
       firstName: userData?.firstName,
       lastName: userData?.lastName,
+      displayName: userData?.displayName,
     };
 
     // find our user

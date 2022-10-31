@@ -1,5 +1,4 @@
 const dotenv = require('dotenv');
-const routes = require('./routes');
 const express = require('express');
 
 const { applyMiddlewares } = require('./middlewares');

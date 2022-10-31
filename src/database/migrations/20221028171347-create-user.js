@@ -17,6 +17,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      displayName: {
+        type: Sequelize.STRING,
+      },
       email: {
         allowNull: false,
         unique: true,
@@ -27,6 +30,9 @@ module.exports = {
         type: Sequelize.STRING,
       },
       status: {
+        type: Sequelize.STRING,
+      },
+      role: {
         type: Sequelize.STRING,
       },
       createdAt: {
