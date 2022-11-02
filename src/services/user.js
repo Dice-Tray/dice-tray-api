@@ -1,8 +1,27 @@
 const { Op } = require('sequelize');
 const pick = require('lodash/pick');
 const model = require('../models');
+const bcrypt = require('bcrypt');
 
 const { User } = model;
+
+const makeSafeUser = (user) => {
+  if (!user) {
+    return null;
+  }
+
+  return {
+    id,
+    email,
+    displayName,
+    firstName,
+    lastName,
+    role,
+    createdAt,
+    updatedAt,
+  };
+}
+
 
 module.exports = {
   async create(newUserData) {
@@ -18,6 +37,9 @@ module.exports = {
       throw { status: 400, message: 'Error: Missing parameter' };
     }
 
+    //salt the password for security purposes
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     // make sure this email address hasn't already been used
     const user = await User.findOne({ where: { email: email } });
     if (user) {
@@ -29,13 +51,13 @@ module.exports = {
       firstName,
       lastName,
       email,
-      password,
+      password: hashedPassword,
       displayName,
       status: 'ACTIVE',
       role: 'USER',
     });
 
-    return newUser;
+    return makeSafeUser(newUser);
   },
   async getUserByID(id) {
     // check to make sure we have our id
@@ -53,8 +75,9 @@ module.exports = {
       throw { status: 404, message: 'Error: User not found' };
     }
 
-    return user;
+    return makeSafeUser(newUser);
   },
+
   async updateUserByID(id, userData) {
     // check to make sure we have our id
     if (!id) {
@@ -80,6 +103,7 @@ module.exports = {
 
     return;
   },
+
   async deleteUserByID(id) {
     // check to make sure we have our param
     if (!id) {
