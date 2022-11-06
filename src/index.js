@@ -1,11 +1,7 @@
-const dotenv = require('dotenv');
 const express = require('express');
 
 const { applyMiddlewares } = require('./middlewares');
 const applyRoutes = require('./routes');
-
-// Load environment variables.
-dotenv.config();
 
 //create an app
 const app = express();

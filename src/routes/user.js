@@ -13,4 +13,7 @@ router.delete('/users/:userID', UserController.deleteUserByID);
 //create the batch route
 router.get('/users', UserController.getAll);
 
+// Create a combo route that creates a user and then logs them in
+router.post('/register', UserController.register);
+
 module.exports = router;

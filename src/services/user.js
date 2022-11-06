@@ -1,26 +1,8 @@
-const { Op } = require('sequelize');
 const pick = require('lodash/pick');
 const model = require('../models');
 const bcrypt = require('bcrypt');
-
+const { makeSafeUser } = require('../utils');
 const { User } = model;
-
-const makeSafeUser = (user) => {
-  if (!user) {
-    return null;
-  }
-
-  return {
-    id,
-    email,
-    displayName,
-    firstName,
-    lastName,
-    role,
-    createdAt,
-    updatedAt,
-  };
-}
 
 
 module.exports = {
@@ -75,7 +57,26 @@ module.exports = {
       throw { status: 404, message: 'Error: User not found' };
     }
 
-    return makeSafeUser(newUser);
+    return makeSafeUser(user);
+  },
+
+  async getUserByEmail(email) {
+    // check to make sure we have our email
+    if (!email) {
+      throw { status: 400, message: 'Error: Missing email' };
+    }
+
+    // find our user
+    const user = await User.findOne({
+      where: { email },
+    });
+
+    // throw a not found if not found
+    if (!user) {
+      throw { status: 404, message: 'Error: User not found' };
+    }
+
+    return makeSafeUser(user);
   },
 
   async updateUserByID(id, userData) {
